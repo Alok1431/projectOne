@@ -1,6 +1,8 @@
 package com.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,15 +44,21 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		UserDao userDao = new UserDaoImpl();
 		String username = request.getParameter("uname");
 		String password = request.getParameter("psw");
 
-		User checkLoginCredentail = userDao.checkLoginCredentail(username, password);
-
-		if (checkLoginCredentail!=null) {
-			request.setAttribute("user", checkLoginCredentail);
+		
+		User user = userDao.checkLoginCredentail(username, password);
+		
+		ArrayList<User> allUserDetails = userDao.getAllUserDetails();
+        
+		System.out.println(allUserDetails);
+		
+		if (user!=null) {
+			request.setAttribute("user", user);
+			request.setAttribute("userList",allUserDetails);
 			request.getRequestDispatcher("login-success.jsp").forward(request, response);
 		} else {
 			request.setAttribute("message", "Account Invalid");
@@ -58,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 
 		}
 
-		doGet(request, response);
+		doGet(request, response); 
 	}
 
 }

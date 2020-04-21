@@ -46,6 +46,8 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("psw");
 		String email = request.getParameter("email");
 		Long mobile = Long.parseLong(request.getParameter("mobile"));
+
+		//print username ,password,email,mobile
 		
 		User user=new User();
 		user.setName(username);
@@ -53,7 +55,12 @@ public class RegisterServlet extends HttpServlet {
 		user.setEmail(email);
 		user.setMobile(mobile);
 		
+		//print user
+		
 		String addUserDetail = userDao.addUserDetail(user);
+		System.out.println("inside register servlet");
+		System.out.println(addUserDetail);
+		
 		if(addUserDetail!=null) {
 			request.setAttribute("message", "Registered Successfully");
 			RequestDispatcher rd=request.getRequestDispatcher("/register-success.jsp");
