@@ -22,13 +22,17 @@
 			<tr>
 				<th>Id</th>
 				<th>Name</th>
+				<th>Email</th>
+				<th>Mobile</th>
 				<th>Action</th>
 			</tr>
 			<c:forEach items="${userList}" var="user">
 				<tr>
 					<td>${user.id}</td>
 					<td>${user.name}</td>
-					<td><a href="#">Update</a><a href="#">Delete</a></td>
+					<td>${user.email}</td>
+					<td>${user.mobile}</td>
+					<td><a href="EditServlet?userId=${user.id}">Edit</a>  :  <a href="DeleteServlet?userId=${user.id}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -35,6 +35,75 @@ public class UserDaoImpl implements UserDao {
 		return connection;
 
 	}
+	
+	@Override
+	public boolean updateUserById(User user) {
+		Connection connection=getDbConnection();
+		String sql="update user set name=?,password=?,email=?,mobile=? where id=?";
+		try {
+			PreparedStatement psmt=connection.prepareStatement(sql);
+			psmt.setString(1, user.getName());
+			psmt.setString(2,user.getPassword());
+			psmt.setString(3, user.getEmail());
+			psmt.setLong(4, user.getMobile());
+			psmt.setInt(5,user.getId());
+						
+			int executeUpdate = psmt.executeUpdate();
+			if(executeUpdate>0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+
+	
+	@Override
+	public User getUserById(Integer userId) {
+        User user=null; 
+        Connection connection=getDbConnection();
+        
+        try {
+        	//step 3
+			PreparedStatement psmt=connection.prepareStatement("select * from user where id=?");
+			psmt.setInt(1, userId);
+			//step 4
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setPassword(rs.getString("password"));
+				user.setEmail(rs.getString("email"));
+				user.setMobile(rs.getLong("mobile"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				//step 5
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        
+		return user;
+	}
+	
 
 	@Override
 	public ArrayList<User> getAllUserDetails() {
@@ -68,7 +137,7 @@ public class UserDaoImpl implements UserDao {
 				e.printStackTrace();
 			}
 		}
-
+        System.out.println("--> " + userList);
 		return userList;
 	}
 
@@ -149,11 +218,10 @@ public class UserDaoImpl implements UserDao {
 				e.printStackTrace();
 			}
 		}
-		// System.out.println(user);
-		System.out.println(user.getId());
-		System.out.println(user.getEmail());
-
 		return user;
 	}
+
+	
+	
 
 }

@@ -12,4 +12,11 @@ public interface UserDao {
 
 	public ArrayList<User> getAllUserDetails();
 
+	public User getUserById(Integer userId);
+	
+	public boolean updateUserById(User user);
+	
+	//public boolean deleteUserByid(Integer userId);
+	
 }
+ 
