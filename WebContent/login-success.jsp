@@ -32,7 +32,7 @@
 					<td>${user.name}</td>
 					<td>${user.email}</td>
 					<td>${user.mobile}</td>
-					<td><a href="EditServlet?userId=${user.id}">Edit</a>  :  <a href="DeleteServlet?userId=${user.id}">Delete</a></td>
+					<td><a href="EditServlet?userId=${user.id}">Edit</a>  :  <a href="DeleteServlet?employeeId=${user.id}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>

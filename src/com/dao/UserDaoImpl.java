@@ -221,6 +221,32 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	@Override
+	public boolean deleteUserByid(Integer userId) {
+		Connection connection=getDbConnection();
+		String sql="delete from user where id=?";
+		
+		try {
+			PreparedStatement psmt=connection.prepareStatement(sql);
+			psmt.setInt(1, userId);
+			int executeUpdate = psmt.executeUpdate();
+			if(executeUpdate>0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	    return false;
+	}
+
 	
 	
 
